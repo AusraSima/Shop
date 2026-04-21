@@ -1,4 +1,5 @@
-﻿using Shop.Entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shop.Entities;
 using Shop.Repositories;
 using Shop.Services;
 
@@ -8,11 +9,17 @@ namespace Shop.ConsoleApp
 	{
 		static void Main(string[] args)
 		{
-			IProductRepository productRepository = new ProductRepository();
-			IProductService productService = new ProductService(productRepository);
+			var collection = new ServiceCollection();
 
-			IBasketRepository basketRepository = new BasketRepository();
-			IBasketService basketService = new BasketService(basketRepository, productRepository);
+			collection.AddScoped<IProductRepository, ProductRepository>();
+			collection.AddScoped<IProductService, ProductService>();
+			collection.AddScoped<IBasketRepository, BasketRepository>();
+			collection.AddScoped<IBasketService, BasketService>();
+
+			var serviceProvider = collection.BuildServiceProvider();
+
+			var productService = serviceProvider.GetRequiredService<IProductService>();
+			var basketService = serviceProvider.GetRequiredService<IBasketService>();
 
 			productService.Add(new Product()
 			{
