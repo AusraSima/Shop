@@ -12,7 +12,7 @@ namespace Shop.Repositories
 			{
 				if (basket.Products.Any(p => p.ProductId == productId))
 				{
-					basket.Products[productId].Count += count;
+					basket.Products.First(p => p.ProductId == productId).Count += count;
 				}
 				else
 				{
@@ -71,5 +71,6 @@ namespace Shop.Repositories
 			}
 			return null;
 		}
+
 	}
 }

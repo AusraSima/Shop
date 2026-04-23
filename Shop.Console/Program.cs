@@ -44,15 +44,7 @@ namespace Shop.ConsoleApp
 			basket = basketService.Get(2);
 			Console.WriteLine($"userId: {basket.UserId}; productId: {basket.Products[0].ProductId}; count: {basket.Products[0].Count}");
 			basketService.Add(1, 2, 3);
-			basket = basketService.Get(1);
 			basketService.Add(2, 2, 5);
-
-			Console.WriteLine("All products in the baskets:");
-
-			for (int i = 0; i < basket.Products.Count; i++)
-			{
-				Console.WriteLine($"userId: {basket.UserId}; productId: {basket.Products[i].ProductId}; count: {basket.Products[i].Count}");
-			}
 
 		}
 	}
