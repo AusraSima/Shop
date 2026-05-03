@@ -6,6 +6,7 @@ using Shop.Data;
 using Shop.Entities;
 using Shop.Repositories;
 using Shop.Services;
+using Shop.Services.Models;
 
 namespace Shop.ConsoleApp
 {
@@ -23,41 +24,21 @@ namespace Shop.ConsoleApp
 				dbContext.Database.Migrate();
 
 				var productService = serviceProvider.GetRequiredService<IProductService>();
-				var basketService = serviceProvider.GetRequiredService<IBasketService>();
 
-				productService.Add(new Product()
+				productService.Create(new CreateProduct
 				{
-					Name = "Book",
-					Price = 1.99M
+					Name = "Sample Book",
+					Price = 9.99m,
+					CountInStock = 100
 				});
-				productService.Add(new Product()
-				{
-					Name = "Pen",
-					Price = 1.29M
-				});
-
-				var product = productService.Get(1);
-				Console.WriteLine($"id: {product.Id}; name: {product.Name}");
-				product = productService.Get(2);
-				Console.WriteLine($"id: {product.Id}; name: {product.Name}");
 			}
-
-
-
-			//basketService.Add(1, 1, 2);
-			//basketService.Add(2, 2, 3);
-			//var basket = basketService.Get(1);
-			//Console.WriteLine($"userId: {basket.UserId}; productId: {basket.Products[0].ProductId}; count: {basket.Products[0].Count}");
-			//basket = basketService.Get(2);
-			//Console.WriteLine($"userId: {basket.UserId}; productId: {basket.Products[0].ProductId}; count: {basket.Products[0].Count}");
-			//basketService.Add(1, 2, 3);
-			//basketService.Add(2, 2, 5);
-
 		}
 
 		public static IHost BuildHost()
 		{
-			var host = Host.CreateDefaultBuilder().ConfigureServices((context, services) =>
+			var host = Host.CreateDefaultBuilder()
+				.UseEnvironment("Development")
+				.ConfigureServices((context, services) =>
 			{
 				var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
 
@@ -70,6 +51,10 @@ namespace Shop.ConsoleApp
 				services.AddScoped<IProductService, ProductService>();
 				services.AddScoped<IBasketRepository, BasketRepository>();
 				services.AddScoped<IBasketService, BasketService>();
+				services.AddScoped<IUserRepository, UserRepository>();
+				services.AddScoped<IUserService, UserService>();
+				services.AddScoped<IOrderRepository, OrderRepository>();
+				services.AddScoped<IOrderService, OrderService>();
 			});
 
 			return host.Build();

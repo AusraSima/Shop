@@ -5,21 +5,20 @@ namespace Shop.Services
 {
 	public class BasketService : IBasketService
 	{
-		public IBasketRepository projectBasketRepository;
-		public IProductRepository projectProductRepository;
-		public BasketService(IBasketRepository basketRepository, IProductRepository productRepository)
+		private readonly IBasketRepository basketRepository;
+		public BasketService(IBasketRepository basketRepository)
 		{
-			projectBasketRepository = basketRepository;
-			projectProductRepository = productRepository;
+			this.basketRepository = basketRepository;
 		}
+
 
 		public int Add(int userId, int productId, int count)
 		{
-			return projectBasketRepository.Add(userId, productId, count);
+			return basketRepository.Add(userId, productId, count);
 		}
 		public Basket Get(int id)
 		{
-			return projectBasketRepository.Get(id);
+			return basketRepository.Get(id);
 		}
 
 	}
