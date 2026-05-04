@@ -27,9 +27,9 @@ namespace Shop.ConsoleApp
 
 				productService.Create(new CreateProduct
 				{
-					Name = "Sample Book",
-					Price = 9.99m,
-					CountInStock = 100
+					Name = "Notebook",
+					Price = 4.99m,
+					//CountInStock = 100
 				});
 			}
 		}

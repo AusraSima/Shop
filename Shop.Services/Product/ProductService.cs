@@ -21,7 +21,7 @@ namespace Shop.Services
 			{
 				Name = createProduct.Name,
 				Price = createProduct.Price,
-				CountInStock = createProduct.CountInStock
+				//CountInStock = createProduct.CountInStock
 			};
 
 			return productRepository.Create(product);
